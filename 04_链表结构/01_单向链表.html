@@ -141,6 +141,52 @@
 
         return true
       }
+
+      // 7.removeAt方法
+      LinkedList.prototype.removeAt = function(position){
+        // 1.越界判断
+        if(position < 0 || position >= this.length) return null
+
+        // 2.判断是否删除的是第一个节点
+        var current = this.head
+        if(position == 0){
+          this.head = this.head.next
+        }else{
+          var index = 0;
+          var previous = null
+          while(index++ < position){
+            previous = current
+            current = current.next
+          }
+
+          // 前一个节点的next指向，current的next即可
+          previous.next = current.next
+        }
+
+        // 3.length - 1
+        this.length -= 1
+
+        return current.data
+      }
+
+      // 8.remove方法
+      LinkedList.prototype.remove = function(data){
+        // 1.获取data在列表中的位置
+        var position = this.indexOf(data)
+
+        // 2.根据位置信息，删除节点
+        return this.removeAt(position)
+      }
+
+      // 9.isEmpty方法
+      LinkedList.prototype.isEmpty = function(){
+        return this.length == 0
+      }
+
+      // 10.size()方法
+      LinkedList.prototype.size = function(){
+        return this.length
+      }
     }
 
     // 测试代码
@@ -165,9 +211,30 @@
     // alert(list.get(5))
 
     // 5.测试indexOf方法
-    alert(list.indexOf('abc'))
-    alert(list.indexOf('bbb'))
-    alert(list.indexOf('ccc'))
+    // alert(list.indexOf('abc'))
+    // alert(list.indexOf('bbb'))
+    // alert(list.indexOf('ccc'))
+
+    // 6.测试update方法
+    list.update(0, 'mmm')
+    list.update(3, 'nnn')
+    alert(list)
+
+    // 7.removeAt方法的测试
+    list.removeAt(0)
+    alert(list)
+    list.removeAt(3)
+    alert(list)
+
+    // 8.remove方法的测试
+    list.remove('nnn')
+    alert(list)
+    list.remove('abc')
+    alert(list)
+
+    // 9.测试isEmpty/size方法
+    alert(list.isEmpty())
+    alert(list.size())
   </script>
 </body>
 
