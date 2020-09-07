@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>双向链表</title>
+</head>
+<body>
+  <script>
+    // 封装双向链表
+    function DoublyLinkedList(){
+      // 内部类：节点类
+      function Node(data){
+        this.data = data
+        this.prev = null
+        this.next = null
+      }
+
+      // 属性
+      this.head = null
+      this.tail = null
+      this.length = 0
+
+      // 1.append方法
+      DoublyLinkedList.prototype.append = function(data){
+        var newNode = new Node(data)
+
+        if(this.length == 0){
+          this.head = newNode
+        }else{
+          var current = this.head
+          while(current){
+            current = current.next
+          }
+          current.next = newNode
+        }
+
+        this.length += 1
+        return true
+      }
+
+      // 2.1.toString方法
+      DoublyLinkedList.prototype.toString = function(){
+        var current = this.head
+        var listString = ''
+        while(current){
+          listString += current.data + ' '
+          current = current.next
+        }
+        return listString
+      }
+    }
+
+    // 测试代码
+    var list = new DoublyLinkedList()
+    list.append('abc')
+    list.append('cba')
+    alert(list)
+
+  </script>
+</body>
+</html>
