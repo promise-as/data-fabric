@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>判断质数</title>
+</head>
+
+<body>
+  <script>
+    // 判断是不是质数
+    function isPrime(num) {
+      for(var i = 2; i < num; i++){
+        if(num % i == 0){
+          return false
+        }
+      }
+      return true
+    }
+
+    // 验证函数
+    alert(isPrime(3))
+    alert(isPrime(11))
+    alert(isPrime(123))
+    alert(isPrime(41))
+  </script>
+</body>
+
+</html>
