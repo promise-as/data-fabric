@@ -63,7 +63,9 @@
 
         // 6.判断是否需要扩容操作
         if (this.count > this.limit * 0.75) {
-          this.resize(this.limit * 2)
+          var newSize = this.limit * 2
+          var newPrime = this.getPrime(newSize)
+          this.resize(newPrime)
         }
       }
 
@@ -112,8 +114,10 @@
             return tuple[1]
 
             // 缩小容量
-            if(this.limit > 7 && this.count < this.limit * 0.25){
-              this.resize(Math.floor(this.limit / 2))
+            if (this.limit > 7 && this.count < this.limit * 0.25) {
+              var newSize = Math.floor(this.limit / 2)
+              var newPrime = this.getPrime(newSize)
+              this.resize(newPrime)
             }
           }
         }
@@ -134,7 +138,7 @@
       }
 
       // 哈希表扩容/缩容
-      HashTable.prototype.resize = function(newLimit){
+      HashTable.prototype.resize = function (newLimit) {
         // 1.保存旧的数组内容
         var oldStorage = this.storage
 
@@ -144,21 +148,45 @@
         this.limit = newLimit
 
         // 3.遍历oldStorage中所有的bucket
-        for(var i = 0; i < oldStorage.length; i++){
+        for (var i = 0; i < oldStorage.length; i++) {
           // 3.1.取出对应的bucket
           var bucket = oldStorage[i]
 
           // 3.2.判断bucket是否为null
-          if(bucket == null){
+          if (bucket == null) {
             continue
           }
-          
+
           // 3.3.bucket中有数据，那么取出数据，重新插入
-          for(var j = 0; j < bucket.length; j++){
+          for (var j = 0; j < bucket.length; j++) {
             var tuple = bucket[j]
             this.put(tuple[0], tuple[1])
           }
         }
+      }
+
+      // 判断某个数字是否是质数
+      HashTable.prototype.isPrime = function (num) {
+        // 1.获取num的平方根
+        var temp = parseInt(Math.sqrt(num))
+
+        // 2.循环判断
+        for (var i = 2; i <= temp; i++) {
+          if (num % i == 0) {
+            return false
+          }
+        }
+        return true
+      }
+
+      // 获取质数的方法
+      HashTable.prototype.getPrime = function (num) {
+        // 14 -> 17
+        // 34 -> 37
+        while (!this.isPrime(num)) {
+          num++
+        }
+        return num
       }
     }
 
